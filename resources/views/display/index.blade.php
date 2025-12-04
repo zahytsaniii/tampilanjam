@@ -260,6 +260,74 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 </script>
+    @if(($settings['audio_enabled'] ?? 0) == 1)
+        <audio id="adzanAudio" preload="auto">
+            <source src="{{ asset($settings['audio_file'] ?? 'audio/adzan.mp3') }}" type="audio/mpeg">
+        </audio>
 
+        <script>
+        const audioEnabled = true;
+        const audioOffset = {{ intval($settings['audio_offset_minutes'] ?? 10) }};
+        let audioPlayed = {};
+        let lastDate = new Date().toDateString();
+
+        const audio = document.getElementById('adzanAudio');
+
+        // ✅ WAJIB: UNLOCK SEKALI DENGAN 1 KLIK USER
+        document.addEventListener('click', function () {
+            audio.muted = false;
+            audio.play().then(() => {
+                audio.pause();
+                audio.currentTime = 0;
+                console.log('✅ Audio berhasil di-unlock oleh user');
+            }).catch(e => console.warn('❌ Unlock gagal:', e));
+        }, { once: true });
+
+        // ✅ RESET SETIAP HARI
+        function resetDailyAudio() {
+            const today = new Date().toDateString();
+            if (today !== lastDate) {
+                audioPlayed = {};
+                lastDate = today;
+            }
+        }
+
+        // ✅ SISTEM AUDIO OTOMATIS BERDASARKAN OFFSET
+        setInterval(() => {
+            if (!audioEnabled || !audio) return;
+
+            const now = new Date();
+            resetDailyAudio();
+
+            ['subuh','dzuhur','ashar','maghrib','isya'].forEach(sholat => {
+                if (!prayerTimes[sholat]) return;
+
+                const [h, m] = prayerTimes[sholat].split(':').map(Number);
+
+                const target = new Date();
+                target.setHours(h);
+                target.setMinutes(m);
+                target.setSeconds(0);
+
+                const offsetTarget = new Date(target.getTime() - (audioOffset * 60000));
+                const key = sholat + '-' + now.toDateString();
+
+                if (
+                    now.getHours() === offsetTarget.getHours() &&
+                    now.getMinutes() === offsetTarget.getMinutes() &&
+                    !audioPlayed[key]
+                ) {
+                    audio.play().then(() => {
+                        audioPlayed[key] = true;
+                        console.log('🔊 Memutar audio:', sholat);
+                    }).catch(err => {
+                        console.warn('❌ Audio gagal play:', err);
+                    });
+                }
+            });
+
+        }, 1000);
+        </script>
+    @endif
 </body>
 </html>

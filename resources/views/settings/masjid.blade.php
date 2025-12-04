@@ -34,7 +34,7 @@
         </div>
     @endif
 
-    <form action="{{ route('settings.save') }}" method="POST" class="mt-4">
+    <form action="{{ route('settings.save') }}" method="POST" class="mt-4" enctype="multipart/form-data">
         @csrf
 
         {{-- =========================
@@ -429,6 +429,56 @@
                         </div>
                     @endforeach
                 </div>
+
+            </div>
+        </div>
+
+        {{-- =========================
+            PENGATURAN AUDIO ADZAN
+        ========================== --}}
+        <div class="card mb-4 border-danger">
+            <div class="card-header bg-danger text-white">
+                Pengaturan Audio Otomatis
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+
+                    {{-- TOGGLE AUDIO --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Aktifkan Audio</label>
+                        <select name="audio_enabled" class="form-select">
+                            <option value="1" {{ ($settings['audio_enabled'] ?? 0) == 1 ? 'selected' : '' }}>ON</option>
+                            <option value="0" {{ ($settings['audio_enabled'] ?? 0) == 0 ? 'selected' : '' }}>OFF</option>
+                        </select>
+                    </div>
+
+                    {{-- OFFSET WAKTU --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Putar Audio (menit sebelum adzan)</label>
+                        <select name="audio_offset_minutes" class="form-select">
+                            <option value="10" {{ ($settings['audio_offset_minutes'] ?? 10) == 10 ? 'selected' : '' }}>10 Menit</option>
+                            <option value="20" {{ ($settings['audio_offset_minutes'] ?? 20) == 20 ? 'selected' : '' }}>20 Menit</option>
+                        </select>
+                    </div>
+
+                    {{-- FILE AUDIO --}}
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Upload Audio Adzan (MP3)</label>
+                        <input type="file" name="audio_file" class="form-control" accept=".mp3">
+                    </div>
+
+                </div>
+
+                {{-- PREVIEW AUDIO --}}
+                @if(!empty($settings['audio_file']))
+                    <div class="mt-3">
+                        <label class="form-label">Preview Audio:</label>
+                        <audio controls class="w-100">
+                            <source src="{{ asset($settings['audio_file']) }}" type="audio/mpeg">
+                        </audio>
+                    </div>
+                @endif
 
             </div>
         </div>

@@ -127,7 +127,7 @@
 </head>
 
 <body>
-
+@if(($settings['license_status'] ?? 'invalid') == 'valid')
 <div class="header">
     <h1>{{ $settings['mosque_name'] ?? '' }}</h1>
     <p>{{ $settings['mosque_address'] ?? '' }}</p>
@@ -156,6 +156,17 @@
     </span>
 </div>
 
+@else
+    {{-- =========================
+        TAMPILAN SAAT LICENSE TIDAK VALID
+    ========================== --}}
+    <div class="header">
+        <h1>DEVICE BELUM AKTIF</h1>
+        <p>Silakan aktivasi license terlebih dahulu</p>
+        <div class="clock" id="clock" style="font-size:120px; color:#ff6b6b"></div>
+    </div>
+
+@endif
 
 <!-- ================================
      SCRIPT

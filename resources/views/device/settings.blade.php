@@ -29,6 +29,37 @@
                     <span class="badge bg-danger">TIDAK VALID</span>
                 @endif
             </p>
+
+            {{-- TAMPILKAN HANYA JIKA LICENSE VALID --}}
+            @if(($settings['license_status'] ?? 'invalid') == 'valid')
+                <p class="mt-2">
+                    <b>License Expired:</b>
+                    <span class="badge bg-warning text-dark">
+                        {{ \Carbon\Carbon::parse($settings['license_expired_at'])->format('d M Y') }}
+                    </span>
+                </p>
+            @endif
+        </div>
+    </div>
+
+    {{-- =========================
+    AKTIVASI LICENSE
+    ========================== --}}
+    <div class="card mb-4 border-success">
+        <div class="card-header bg-success text-white">Aktivasi License</div>
+        <div class="card-body">
+            <form method="POST" action="{{ route('device.license') }}">
+                @csrf
+
+                <div class="mb-3">
+                    <label>License Key</label>
+                    <input type="text" name="license_key"
+                        value="{{ $settings['license_key'] ?? '' }}"
+                        class="form-control" required>
+                </div>
+
+                <button class="btn btn-success">Aktifkan License</button>
+            </form>
         </div>
     </div>
 

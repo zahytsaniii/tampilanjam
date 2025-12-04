@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/device-settings', [DeviceController::class, 'index'])->name('device.settings');
     Route::post('/device-settings/password', [DeviceController::class, 'changePassword'])->name('device.password');
     Route::post('/device-settings/factory-reset', [DeviceController::class, 'factoryReset'])->name('device.reset');
+    Route::post('/device-settings/license', [DeviceController::class, 'activateLicense'])->name('device.license');
     
     // Settings
     Route::get('/settings/masjid', [SettingController::class, 'index'])->name('settings.index');

@@ -42,6 +42,7 @@
     <a href="{{ route('schedule.index') }}">Jadwal Sholat</a>
     <a href="{{ route('display.runningtext') }}">Running Text</a>
     <a href="{{ route('display.appearance') }}">Pengaturan Tampilan</a>
+    <a href="{{ route('device.settings') }}">Pengaturan Perangkat</a>
 
     <form class="mt-4 text-center" action="{{ route('logout') }}" method="POST">
         @csrf

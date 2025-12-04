@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DisplayController;
 use App\Http\Controllers\PrayerScheduleController;
 use App\Http\Controllers\RunningTextController;
@@ -20,6 +21,11 @@ Route::middleware('auth')->group(function () {
         return view('dashboard.index');
     })->name('dashboard');
 
+    //Device Settings
+    Route::get('/device-settings', [DeviceController::class, 'index'])->name('device.settings');
+    Route::post('/device-settings/password', [DeviceController::class, 'changePassword'])->name('device.password');
+    Route::post('/device-settings/factory-reset', [DeviceController::class, 'factoryReset'])->name('device.reset');
+    
     // Settings
     Route::get('/settings/masjid', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings/masjid', [SettingController::class, 'save'])->name('settings.save');

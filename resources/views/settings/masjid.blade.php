@@ -214,6 +214,83 @@
                         value="{{ $settings['api_url'] ?? '' }}" readonly>
                 </div>
 
+                {{-- ================= MANUAL HISAB INPUT ================= --}}
+                <div id="manual_input" class="mt-4 {{ $source == 'manual' ? '' : 'd-none' }}">
+                    <!-- <h5 class="text-primary mb-3">Parameter Perhitungan Jadwal Sholat (Manual / Hisab)</h5> -->
+                    <label class="form-label fw-bold">Perhitungan Jadwal Sholat (Manual / Hisab)</label>
+                    <div class="row">
+
+                        <div class="col-md-3 mb-3">
+                            <label>Latitude</label>
+                            <input type="text" name="hisab_latitude" class="form-control" value="{{ $settings['hisab_latitude'] ?? '' }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Longitude</label>
+                            <input type="text" name="hisab_longitude" class="form-control" value="{{ $settings['hisab_longitude'] ?? '' }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Tinggi Tempat (m)</label>
+                            <input type="number" name="hisab_altitude" class="form-control" value="{{ $settings['hisab_altitude'] ?? 0 }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Timezone</label>
+                            <input type="text" name="hisab_timezone" class="form-control" value="{{ $settings['hisab_timezone'] ?? 'Asia/Jakarta' }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>GMT</label>
+                            <input type="number" step="0.1" name="hisab_gmt" class="form-control" value="{{ $settings['hisab_gmt'] ?? 7 }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Ref (GMT x 15)</label>
+                            <input type="number" step="0.01" name="hisab_ref" class="form-control" value="{{ $settings['hisab_ref'] ?? 105 }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Ikhtiyat (Derajat)</label>
+                            <input type="number" step="0.001" name="hisab_ikhtiyat" class="form-control" value="{{ $settings['hisab_ikhtiyat'] ?? 0.035 }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Mazhab</label>
+                            <select name="hisab_mazhab" class="form-select">
+                                <option value="1" {{ ($settings['hisab_mazhab'] ?? 1) == 1 ? 'selected' : '' }}>Syafi'i</option>
+                                <option value="2" {{ ($settings['hisab_mazhab'] ?? 1) == 2 ? 'selected' : '' }}>Hanafi</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Sudut Fajar</label>
+                            <input type="number" step="0.1" name="hisab_fajr_angle" class="form-control" value="{{ $settings['hisab_fajr_angle'] ?? 20 }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Sudut Isya</label>
+                            <input type="number" step="0.1" name="hisab_isya_angle" class="form-control" value="{{ $settings['hisab_isya_angle'] ?? 18 }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Menit Imsak</label>
+                            <input type="number" step="0.01" name="hisab_imsak" class="form-control" value="{{ $settings['hisab_imsak'] ?? 10 }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Sudut Dhuha</label>
+                            <input type="number" step="0.1" name="hisab_dhuha_angle" class="form-control" value="{{ $settings['hisab_dhuha_angle'] ?? 4.5 }}">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label>Solar Day</label>
+                            <input type="number" name="hisab_solar_day" class="form-control" value="{{ $settings['hisab_solar_day'] ?? 365 }}">
+                        </div>
+
+                    </div>
+                </div>
+
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
 
@@ -305,10 +382,18 @@
 
                     document.getElementById('schedule_source').addEventListener('change', function () {
                         const apiInput = document.getElementById('api_input');
+                        const manualInput = document.getElementById('manual_input');
                         if (this.value === 'api') {
                             apiInput.classList.remove('d-none');
-                        } else {
+                            manualInput.classList.add('d-none');
+                        } 
+                        else if (this.value === 'manual') {
                             apiInput.classList.add('d-none');
+                            manualInput.classList.remove('d-none');
+                        } 
+                        else {
+                            apiInput.classList.add('d-none');
+                            manualInput.classList.add('d-none');
                         }
                     });
                 </script>

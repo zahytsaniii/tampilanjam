@@ -77,28 +77,32 @@
         MODE 3: MANUAL INPUT
     ===================================================================== --}}
     @if ($scheduleMode === 'manual')
-        <form action="{{ route('schedule.store') }}" method="POST" class="mt-3">
+        <form action="{{ route('schedule.generate-month') }}" method="POST" class="mt-3">
             @csrf
 
             <div class="row">
                 <div class="col-md-3">
-                    <label>Tanggal</label>
-                    <input type="date" name="date" class="form-control" required>
+                    <label>Bulan</label>
+                    <select name="month" class="form-control" required>
+                        @for ($m = 1; $m <= 12; $m++)
+                            <option value="{{ $m }}">{{ date('F', mktime(0,0,0,$m,1)) }}</option>
+                        @endfor
+                    </select>
                 </div>
 
-                @foreach (['imsak','subuh','syuruq','dhuha','dzuhur','ashar','maghrib','isya'] as $col)
-                    <div class="col-md-3 mt-2">
-                        <label>{{ ucfirst($col) }}</label>
-                        <input type="time" name="{{ $col }}" class="form-control">
-                    </div>
-                @endforeach
+                <div class="col-md-3">
+                    <label>Tahun</label>
+                    <input type="number" name="year" class="form-control" value="{{ date('Y') }}" required>
+                </div>
             </div>
 
-            <button class="btn btn-primary mt-3">Simpan</button>
+            <button class="btn btn-primary mt-3">
+                🔄 Generate Jadwal 1 Bulan
+            </button>
         </form>
 
         <div class="alert alert-info mt-2">
-            Pastikan semua input waktu sudah benar. Jika ada yang kosong atau format salah, akan muncul pesan error.
+            Jadwal akan dihitung otomatis berdasarkan parameter hisab di menu <b>Settings</b>.
         </div>
     @endif
 

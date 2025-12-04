@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/schedule', [PrayerScheduleController::class, 'index'])->name('schedule.index');
     Route::post('/schedule/fetch-api', [PrayerScheduleController::class, 'fetchFromAPI'])->name('schedule.fetch-api');
     Route::post('/schedule/import', [PrayerScheduleController::class, 'import'])->name('schedule.import');
+    Route::post('/schedule/generate', [PrayerScheduleController::class, 'generate'])->name('schedule.generate');
+    Route::post('/schedule/generate-month', [PrayerScheduleController::class, 'generateMonth'])->name('schedule.generate-month');
     Route::post('/schedule/store', [PrayerScheduleController::class, 'store'])->name('schedule.store');
     Route::get('/schedule/template', [PrayerScheduleController::class, 'downloadTemplate'])->name('schedule.template');
 

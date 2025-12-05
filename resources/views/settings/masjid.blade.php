@@ -58,7 +58,7 @@
                         placeholder="Masukkan alamat lengkap">{{ $settings['mosque_address'] ?? '' }}</textarea>
                 </div>
 
-                <div class="row mb-3">
+                <!-- <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Latitude</label>
                         <input type="text" name="latitude" class="form-control"
@@ -69,7 +69,7 @@
                         <input type="text" name="longitude" class="form-control"
                             value="{{ $settings['longitude'] ?? '' }}" placeholder="106.816666">
                     </div>
-                </div>
+                </div> -->
 
                 <div class="mb-3">
                     <label class="form-label">Timezone</label>

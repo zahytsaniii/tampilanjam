@@ -9,7 +9,7 @@
     <div class="col-md-4">
         <div class="card p-3">
             <h5>Pengaturan Masjid</h5>
-            <p>Atur nama masjid, alamat, lat/long, dsb.</p>
+            <p>Atur nama masjid, alamat, dsb.</p>
             <a href="{{ route('settings.index') }}" class="btn btn-primary btn-sm">Atur</a>
         </div>
     </div>

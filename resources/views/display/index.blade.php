@@ -131,7 +131,13 @@
 <div class="header">
     <h1>{{ $settings['mosque_name'] ?? '' }}</h1>
     <p>{{ $settings['mosque_address'] ?? '' }}</p>
-    <div class="date-info" id="dateInfo"></div>
+    <!-- <div class="date-info" id="dateInfo"></div> -->
+     <div class="date-info">
+        {{ $hariPasaran }}, {{ $tanggalMasehi }}
+    </div>
+    <div class="date-info">
+        {{ $hijri }} 
+    </div>
 
     <div class="clock" id="clock"></div>
     <div class="countdown" id="countdown">Menghitung...</div>
@@ -173,27 +179,27 @@
 ==================================-->
 <script>
     // TANGGAL + HARI
-    function updateDate() {
-        const bulan = [
-            "Januari","Februari","Maret","April","Mei","Juni",
-            "Juli","Agustus","September","Oktober","November","Desember"
-        ];
+    // function updateDate() {
+    //     const bulan = [
+    //         "Januari","Februari","Maret","April","Mei","Juni",
+    //         "Juli","Agustus","September","Oktober","November","Desember"
+    //     ];
 
-        const hari = [
-            "Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"
-        ];
+    //     const hari = [
+    //         "Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"
+    //     ];
 
-        let now = new Date();
-        let namaHari = hari[now.getDay()];
-        let tanggal = now.getDate();
-        let namaBulan = bulan[now.getMonth()];
-        let tahun = now.getFullYear();
+    //     let now = new Date();
+    //     let namaHari = hari[now.getDay()];
+    //     let tanggal = now.getDate();
+    //     let namaBulan = bulan[now.getMonth()];
+    //     let tahun = now.getFullYear();
 
-        document.getElementById('dateInfo').innerHTML =
-            `${namaHari}, ${tanggal} ${namaBulan} ${tahun}`;
-    }
+    //     document.getElementById('dateInfo').innerHTML =
+    //         `${namaHari}, ${tanggal} ${namaBulan} ${tahun}`;
+    // }
 
-    updateDate();
+    // updateDate();
 
     // CLOCK
     function updateClock() {

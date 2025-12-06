@@ -81,6 +81,54 @@
         </div>
 
         {{-- =========================
+            PENGATURAN TAMPILAN TANGGAL
+        ========================== --}}
+        <div class="card mb-4 border-info">
+            <div class="card-header bg-info text-white">
+                Pengaturan Tampilan Tanggal
+            </div>
+            <div class="card-body">
+
+                @php
+                    $dateDisplay = isset($settings['display_date_extra']) 
+                        ? json_decode($settings['display_date_extra'], true)
+                        : [];
+                @endphp
+
+                <div class="row">
+                    <input type="hidden" name="display_date_extra" value="[]">
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input type="checkbox"
+                                name="display_date_extra[]"
+                                value="hijriyah"
+                                class="form-check-input"
+                                {{ in_array('hijriyah', $dateDisplay) ? 'checked' : '' }}>
+                            <label class="form-check-label">
+                                Tanggal Hijriyah
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input type="checkbox"
+                                name="display_date_extra[]"
+                                value="pasaran"
+                                class="form-check-input"
+                                {{ in_array('pasaran', $dateDisplay) ? 'checked' : '' }}>
+                            <label class="form-check-label">
+                                Pasaran Jawa
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        {{-- =========================
             PENGATURAN TAMPILAN
         ========================== --}}
         <div class="card mb-4 border-success">

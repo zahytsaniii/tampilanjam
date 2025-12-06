@@ -7,32 +7,84 @@ use App\Models\Setting;
 use App\Models\PrayerSchedule;
 use App\Models\RunningText;
 use Carbon\Carbon;
+use Alkoumi\LaravelHijriDate\Hijri;
+use App\Helpers\DateHelper;
+use Illuminate\Support\Facades\App;
 
 class DisplayController extends Controller
 {
     public function index()
-    {
-        // Ambil settings
-        $settings = Setting::pluck('value', 'key')->toArray();
+{
+    // ✅ Ambil settings
+    $settings = Setting::pluck('value', 'key')->toArray();
 
-        // Tanggal hari ini
-        $date = Carbon::now($settings['timezone'] ?? 'Asia/Jakarta')->format('Y-m-d');
+    // ✅ Timezone
+    $timezone = $settings['timezone'] ?? 'Asia/Jakarta';
 
-        // Ambil jadwal sholat hari ini
-        $prayer = PrayerSchedule::where('date', $date)->first();
+    // ✅ Tanggal & Waktu Sekarang (JANGAN startOfDay agar hari tidak geser)
+    $now = Carbon::now($timezone);
+    $date = $now->format('Y-m-d');
 
-        // Decode jadwal yang ditampilkan
-        $enabled = isset($settings['display_enabled_prayers'])
-            ? json_decode($settings['display_enabled_prayers'], true)
-            : ['subuh', 'dzuhur', 'ashar', 'maghrib', 'isya'];
+    // ✅ Ambil jadwal sholat hari ini
+    $prayer = PrayerSchedule::where('date', $date)->first();
 
-        if (!is_array($enabled)) {
-            $enabled = ['subuh', 'dzuhur', 'ashar', 'maghrib', 'isya'];
-        }
+    // ✅ Decode jadwal yang ditampilkan
+    $enabled = isset($settings['display_enabled_prayers'])
+        ? json_decode($settings['display_enabled_prayers'], true)
+        : ['subuh', 'dzuhur', 'ashar', 'maghrib', 'isya'];
 
-        // Ambil semua running text aktif
-        $runningTexts = RunningText::where('active', true)->pluck('message')->toArray();
-
-        return view('display.index', compact('settings', 'prayer', 'enabled', 'runningTexts'));
+    if (!is_array($enabled)) {
+        $enabled = ['subuh', 'dzuhur', 'ashar', 'maghrib', 'isya'];
     }
+
+    // ✅ Ambil semua running text aktif
+    $runningTexts = RunningText::where('active', true)
+        ->pluck('message')
+        ->toArray();
+
+    // ===============================
+    // ✅ HIJRIYAH & PASARAN JAWA
+    // ===============================
+
+    // ✅ Toggle
+    $dateExtra = isset($settings['display_date_extra'])
+        ? json_decode($settings['display_date_extra'], true)
+        : [];
+
+    if (!is_array($dateExtra)) {
+        $dateExtra = [];
+    }
+
+    // ✅ HIJRIYAH
+    $hijri = in_array('hijriyah', $dateExtra)
+        ? hijriIndo($now)
+        : null;
+
+    // ✅ PASARAN JAWA (FIX PALING PENTING ADA DI SINI)
+    $pasaran = in_array('pasaran', $dateExtra)
+        ? getPasaranJawa($date) // FORMAT: Y-m-d
+        : null;
+
+    App::setLocale('id');
+    // ✅ NAMA HARI INDONESIA (Sabtu, Minggu, dst)
+    $namaHari = $now->isoFormat('dddd');
+
+    // ✅ GABUNG: Sabtu Pahing
+    $hariPasaran = $pasaran ? "$namaHari $pasaran" : $namaHari;
+
+    // ✅ TANGGAL FULL: 6 Desember 2025
+    $tanggalMasehi = $now->translatedFormat('d F Y');
+
+    return view('display.index', compact(
+        'settings',
+        'prayer',
+        'enabled',
+        'runningTexts',
+        'dateExtra',
+        'hijri',
+        'pasaran',
+        'hariPasaran',
+        'tanggalMasehi'
+    ));
+}
 }

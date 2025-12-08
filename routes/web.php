@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DisplayController;
+use App\Http\Controllers\DisplayAppearanceController;
 use App\Http\Controllers\PrayerScheduleController;
 use App\Http\Controllers\RunningTextController;
 use App\Http\Controllers\SettingController;
@@ -44,9 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/running-text/display', [RunningTextController::class, 'index'])->name('display.runningtext');
     Route::resource('running-text', RunningTextController::class);
 
-    Route::get('/display/appearance', function () {
-        return view('display.appearance');
-    })->name('display.appearance');
+    Route::get('/display/appearance', [DisplayAppearanceController::class, 'index'])->name('display.appearance');
+    Route::post('/display/appearance', [DisplayAppearanceController::class, 'update']);
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

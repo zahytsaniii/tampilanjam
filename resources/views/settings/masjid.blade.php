@@ -136,13 +136,6 @@
                 Pengaturan Tampilan Layar
             </div>
             <div class="card-body">
-
-                <!-- <div class="mb-3">
-                    <label class="form-label">Running Text</label>
-                    <textarea name="running_text" rows="2" class="form-control"
-                        placeholder="Teks berjalan yang tampil di layar">{{ $settings['running_text'] ?? '' }}</textarea>
-                </div> -->
-
                 <div>
                     <label class="form-label">Jadwal Sholat Yang Ditampilkan</label>
 

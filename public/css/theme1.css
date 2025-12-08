@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+.theme1-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+/* PANEL KIRI BIRU */
+.theme1-sidebar {
+    width: 380px;
+    background: #0b3a8f;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.theme1-time-row {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 28px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.theme1-time-row.active {
+    color: yellow;
+    font-weight: bold;
+    position: relative;
+    padding-left: 20px;
+}
+
+/* Ikon penanda sholat terdekat */
+.theme1-time-row.active::before {
+    content: "▶";
+    position: absolute;
+    left: 0;
+    color: orange;
+    font-size: 22px;
+}
+
+/* BACKGROUND MASJID */
+.theme1-main {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* HEADER MASJID */
+.theme1-header {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    color: white;
+    text-shadow: 2px 2px 10px black;
+}
+
+.theme1-header h1 {
+    font-size: 40px;
+}
+
+/* JAM DIGITAL */
+.theme1-clock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 120px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 4px 4px 20px black;
+}
+
+/* COUNTDOWN */
+.theme1-countdown {
+    position: absolute;
+    top: calc(50% + 80px); /* jarak ke bawah dari jam */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffd86b;
+    text-shadow: 2px 2px 10px black;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* RUNNING TEXT */
+.theme1-running {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: black;
+    color: white;
+    font-size: 32px;
+    padding: 20px 0;
+}

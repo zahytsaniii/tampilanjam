@@ -75,6 +75,19 @@ class DisplayController extends Controller
     // ✅ TANGGAL FULL: 6 Desember 2025
     $tanggalMasehi = $now->translatedFormat('d F Y');
 
+    // ✅ BACKGROUND DEFAULT (BOLEH DARI SETTING JUGA)
+    $background = $settings['display_background'] 
+        ?? asset('images/bg-default.jpg');
+
+    // ✅ JAM LIVE (UNTUK JAM BESAR DI TENGAH)
+    $clock = $now->format('H:i:s');
+
+    // ✅ NAMA MASJID
+    $mosque = $settings['mosque_name'] ?? 'Masjid';
+
+    // ✅ FORMAT TANGGAL UNTUK FOOTER THEME
+    $date = $tanggalMasehi; // atau format lain jika mau
+
     return view('display.index', compact(
         'settings',
         'prayer',
@@ -84,7 +97,11 @@ class DisplayController extends Controller
         'hijri',
         'pasaran',
         'hariPasaran',
-        'tanggalMasehi'
+        'tanggalMasehi',
+        'background',   // ✅ WAJIB DITAMBAHKAN
+        'clock',        // ✅ WAJIB DITAMBAHKAN
+        'mosque',       // ✅ WAJIB DITAMBAHKAN
+        'date'     
     ));
 }
 }

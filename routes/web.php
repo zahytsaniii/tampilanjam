@@ -48,5 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/display/appearance', [DisplayAppearanceController::class, 'index'])->name('display.appearance');
     Route::post('/display/appearance', [DisplayAppearanceController::class, 'update']);
 
+    Route::get('/debug-license', [DeviceController::class, 'showGeneratedLicense']);
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -22,6 +22,7 @@
         <div class="card-body">
             <p><b>Nama Masjid:</b> {{ $settings['mosque_name'] ?? '-' }}</p>
             <p><b>Device ID:</b> {{ $settings['device_id'] ?? '-' }}</p>
+            <p><b>MAC Address:</b> {{ $mac ?? '-' }}</p>
             <p><b>Status License:</b>
                 @if(($settings['license_status'] ?? 'invalid') == 'valid')
                     <span class="badge bg-success">VALID</span>

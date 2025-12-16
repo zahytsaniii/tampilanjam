@@ -30,7 +30,7 @@ class DisplayAppearanceController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'theme' => 'required|in:theme1,theme2'
+            'theme' => 'required|in:theme1,theme2,theme3'
         ]);
 
         DB::table('settings')->updateOrInsert(

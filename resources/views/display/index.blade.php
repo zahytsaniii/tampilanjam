@@ -16,6 +16,8 @@
 
 @if ($activeTheme === 'theme2')
     <link rel="stylesheet" href="{{ asset('css/theme2.css') }}">
+@elseif ($activeTheme === 'theme3')
+    <link rel="stylesheet" href="{{ asset('css/theme3.css') }}">
 @else
     <link rel="stylesheet" href="{{ asset('css/theme1.css') }}">
 @endif
@@ -49,7 +51,26 @@
             :tanggalMasehi="$tanggalMasehi"
             :hijri="$hijri"
         />
+
+    @elseif ($activeTheme === 'theme3')
+
+        {{-- =========================
+            ✅ THEME 3 (TV MODE)
+        ========================== --}}
+        <x-theme.theme3
+            :settings="$settings"
+            :enabled="$enabled"
+            :prayer="$prayer"
+            :runningTexts="$runningTexts"
+            :hariPasaran="$hariPasaran"
+            :tanggalMasehi="$tanggalMasehi"
+            :hijri="$hijri"
+            :mosque="$mosque"
+            :date="$date"
+        />
+
     @else
+
         {{-- =========================
             THEME 1 (DEFAULT)
         ========================== --}}

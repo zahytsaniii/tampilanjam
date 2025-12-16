@@ -1,0 +1,185 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    overflow: hidden; /* ✅ ANTI SCROLL TOTAL */
+}
+
+/* ================= MAIN CONTAINER ================= */
+
+.tv3-container {
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: white;
+    overflow: hidden; /* ✅ PENGUNCI SEMUA ISI */
+}
+
+/* ================= TOP BAR ================= */
+
+.tv3-topbar {
+    height: 12vh;
+    width: 100%;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    padding: 0 4vw;
+}
+
+.tv3-clock {
+    font-size: clamp(28px, 5vw, 70px);
+    font-weight: 800;
+    width: 25vw;
+}
+
+.tv3-center {
+    flex: 1;
+    text-align: center;
+}
+
+.tv3-mosque {
+    font-size: clamp(18px, 3vw, 38px);
+    font-weight: 700;
+}
+
+.tv3-address {
+    font-size: clamp(12px, 1.4vw, 18px);
+    opacity: 0.9;
+}
+
+.tv3-right {
+    width: 25vw;
+    text-align: right;
+}
+
+.tv3-hijri {
+    font-size: clamp(14px, 2vw, 22px);
+    font-weight: 600;
+}
+
+.tv3-date {
+    font-size: clamp(12px, 1.6vw, 18px);
+    opacity: 0.9;
+}
+
+/* ================= JADWAL SHOLAT ================= */
+
+.tv3-prayer-bar {
+    position: absolute;
+    bottom: 12vh; /* ✅ tidak tabrakan dengan running text */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5vw;
+    padding: 0 4vw;
+}
+
+.tv3-prayer-card {
+    background: rgba(0, 0, 0, 0.6);
+    width: min(22vw, 170px);
+    border-radius: 18px;
+    text-align: center;
+    padding: 1.5vh 1vw 2vh 1vw;
+    transition: 0.3s;
+    position: relative;
+}
+
+.tv3-prayer-name {
+    font-size: clamp(13px, 1.8vw, 20px);
+}
+
+.tv3-prayer-time {
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+/* ✅ COUNTDOWN BADGE */
+
+.tv3-countdown {
+    margin-top: 10px;
+    font-size: clamp(11px, 1.4vw, 15px);
+    font-weight: 700;
+    background: rgba(0,0,0,0.5);
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    color: #ffd86b;
+    min-height: 20px;
+}
+
+/* ✅ SHOLAT AKTIF */
+
+.tv3-prayer-card.active {
+    background: linear-gradient(135deg, #ffa500, #ffcc00);
+    color: black;
+    transform: scale(1.08);
+}
+
+/* ================= RUNNING TEXT ================= */
+
+.tv3-running {
+    position: absolute;
+    bottom: 0;
+    height: 8vh; /* ✅ Lebih tipis dari sebelumnya */
+    width: 100%;
+    background: black;
+    font-size: clamp(12px, 2vw, 20px); /* ✅ DIPERKECIL */
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 2vw;
+}
+
+.tv3-running marquee {
+    width: 100%;
+}
+
+/* ================= MOBILE MODE ================= */
+
+@media (max-width: 768px) {
+
+    .tv3-topbar {
+        flex-direction: column;
+        height: 18vh;
+        padding: 1vh 2vw;
+    }
+
+    .tv3-clock,
+    .tv3-right {
+        width: 100%;
+        text-align: center;
+    }
+
+    .tv3-center {
+        margin: 0.8vh 0;
+    }
+
+    .tv3-prayer-bar {
+        bottom: 11vh;
+        gap: 12px;
+    }
+
+    .tv3-prayer-card {
+        width: 42vw;
+    }
+}
+
+/* ================= EXTRA SMALL (HP KECIL) ================= */
+
+@media (max-width: 480px) {
+
+    .tv3-prayer-card {
+        width: 90vw;
+    }
+
+    .tv3-running {
+        font-size: 16px;
+    }
+}

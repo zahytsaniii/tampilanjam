@@ -237,3 +237,110 @@ setActivePrayerTheme1();
 // Update setiap 30 detik
 setInterval(setActivePrayerTheme1, 30000);
 
+
+/* ===========================
+   HIGHLIGHT THEME 3
+=========================== */
+document.addEventListener('DOMContentLoaded', function () {
+
+    const VALID_PRAYERS = [
+        'imsak',
+        'subuh',
+        'syuruq',
+        'dhuha',
+        'dzuhur',
+        'ashar',
+        'maghrib',
+        'isya'
+    ];
+
+    // DEBUG OPTIONAL
+    console.log('PRAYER_TIMES (raw):', window.PRAYER_TIMES);
+
+    function parseToMinutes(value) {
+        if (!value || typeof value !== 'string') return null;
+
+        // HH:MM
+        let match = value.match(/^(\d{1,2}):(\d{2})$/);
+        if (match) {
+            return (parseInt(match[1]) * 60) + parseInt(match[2]);
+        }
+
+        // HH:MM:SS
+        match = value.match(/^(\d{1,2}):(\d{2}):(\d{2})$/);
+        if (match) {
+            return (parseInt(match[1]) * 60) + parseInt(match[2]);
+        }
+
+        return null;
+    }
+
+    function updateTV3Prayer() {
+        if (!window.PRAYER_TIMES) return;
+
+        const now = new Date();
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+        const prayerArray = [];
+
+        // ✅ AMBIL HANYA JADWAL SHOLAT VALID
+        for (const key of VALID_PRAYERS) {
+            const raw = window.PRAYER_TIMES[key];
+            const minutes = parseToMinutes(raw);
+
+            if (minutes !== null) {
+                prayerArray.push({ key, minutes });
+            }
+        }
+
+        if (!prayerArray.length) return;
+
+        prayerArray.sort((a, b) => a.minutes - b.minutes);
+
+        let next = prayerArray.find(p => p.minutes > currentMinutes);
+        let isTomorrow = false;
+
+        if (!next) {
+            next = prayerArray[0];
+            next.minutes += 1440; // tambah 24 jam
+            isTomorrow = true;
+        }
+
+        document.querySelectorAll('.tv3-prayer-card').forEach(card => {
+            card.classList.remove('active');
+            const cd = card.querySelector('.tv3-countdown');
+            if (cd) cd.innerHTML = '';
+        });
+
+        const activeCard = document.querySelector(
+            `.tv3-prayer-card[data-prayer="${next.key}"]`
+        );
+
+        if (!activeCard) return;
+
+        activeCard.classList.add('active');
+
+        const diff = next.minutes - currentMinutes;
+        const jam = Math.floor(diff / 60);
+        const menit = diff % 60;
+
+        const cdEl = activeCard.querySelector('.tv3-countdown');
+        if (cdEl) {
+            cdEl.innerHTML = `${isTomorrow ? 'Besok • ' : ''}Menuju Adzan ${jam}j ${menit}m`;
+        }
+
+        // OPTIONAL GLOBAL DISPLAY
+        const global = document.getElementById('tv3GlobalCountdown');
+        if (global) {
+            global.innerText = `${isTomorrow ? 'Besok — ' : ''}Menuju ${next.key.toUpperCase()} • ${jam}j ${menit}m`;
+        }
+    }
+
+    updateTV3Prayer();
+    setInterval(updateTV3Prayer, 1000);
+
+});
+
+
+
+

@@ -70,6 +70,29 @@
                     </label>
                 </div>
 
+                {{-- TEMPLATE 3 --}}
+                <div class="col-md-6 mb-3">
+                    <label class="w-100">
+                        <div class="card p-2 text-center border 
+                            {{ ($settings['theme'] ?? 'theme1') == 'theme3' ? 'border-primary' : '' }}">
+                            
+                            <img src="{{ asset('images/preview-theme3.jpg') }}"
+                                 class="img-fluid rounded mb-2"
+                                 style="height:200px;object-fit:cover">
+
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="radio"
+                                       name="theme"
+                                       value="theme3"
+                                       {{ ($settings['theme'] ?? 'theme1') == 'theme3' ? 'checked' : '' }}>
+
+                                <span class="ms-2 fw-bold">Template 3</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
             </div>
 
             <button class="btn btn-success mt-3">

@@ -79,6 +79,7 @@
             :enabled="$enabled"
             :prayer="$prayer"
             :runningTexts="$runningTexts"
+            :quranVerses="$quranVerses"
             :hariPasaran="$hariPasaran"
             :tanggalMasehi="$tanggalMasehi"
             :hijri="$hijri"

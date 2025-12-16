@@ -102,3 +102,46 @@ body {
     font-size: 32px;
     padding: 20px 0;
 }
+
+/* ================= AYAT AL-QURAN ================= */
+.theme1-quran {
+    position: absolute;
+    top: calc(50% + 130px); /* 👈 DI BAWAH COUNTDOWN */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 160px;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 10px black;
+    overflow: hidden;
+}
+
+.quran-slide {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.quran-slide.active {
+    opacity: 1;
+}
+
+.quran-arabic {
+    font-size: 30px;
+    font-weight: 700;
+    direction: rtl;
+}
+
+.quran-surah {
+    margin-top: 6px;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+.quran-translation {
+    margin-top: 10px;
+    font-size: 18px;
+    font-style: italic;
+}

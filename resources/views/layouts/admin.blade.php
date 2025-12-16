@@ -76,6 +76,11 @@
         Running Text
     </a>
 
+    <a href="{{ route('quran-verse.index') }}"
+        class="{{ request()->routeIs('quran-verse.*') ? 'active' : '' }}">
+         Ayat Al-Qur'an
+    </a>
+
     <!-- ================= PENGATURAN (SMART COLLAPSE) ================= -->
 
     @php

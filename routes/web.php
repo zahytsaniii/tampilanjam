@@ -5,6 +5,7 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\DisplayController;
 use App\Http\Controllers\DisplayAppearanceController;
 use App\Http\Controllers\PrayerScheduleController;
+use App\Http\Controllers\QuranVerseController;
 use App\Http\Controllers\RunningTextController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/display/appearance', [DisplayAppearanceController::class, 'update']);
 
     Route::get('/debug-license', [DeviceController::class, 'showGeneratedLicense']);
+
+    //Quran View
+    Route::get('/quran-verse', [QuranVerseController::class, 'index'])->name('quran-verse.index');
+    Route::post('/quran-verse', [QuranVerseController::class, 'store'])->name('quran-verse.store');
+    Route::put('/quran-verse/{quranVerse}', [QuranVerseController::class, 'update'])->name('quran-verse.update');
+    Route::delete('/quran-verse/{quranVerse}', [QuranVerseController::class, 'destroy'])->name('quran-verse.destroy');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

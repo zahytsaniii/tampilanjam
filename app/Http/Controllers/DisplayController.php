@@ -9,6 +9,7 @@ use App\Models\RunningText;
 use Carbon\Carbon;
 use Alkoumi\LaravelHijriDate\Hijri;
 use App\Helpers\DateHelper;
+use App\Models\QuranVerse;
 use Illuminate\Support\Facades\App;
 
 class DisplayController extends Controller
@@ -41,6 +42,9 @@ class DisplayController extends Controller
     $runningTexts = RunningText::where('active', true)
         ->pluck('message')
         ->toArray();
+
+    // Ayat Quran
+    $quranVerses = QuranVerse::where('active', true)->get();
 
     // ===============================
     // ✅ HIJRIYAH & PASARAN JAWA
@@ -93,6 +97,7 @@ class DisplayController extends Controller
         'prayer',
         'enabled',
         'runningTexts',
+        'quranVerses',
         'dateExtra',
         'hijri',
         'pasaran',

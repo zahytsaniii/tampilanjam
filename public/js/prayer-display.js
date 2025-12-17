@@ -33,11 +33,10 @@ function getNextEvent() {
     Object.keys(window.PRAYER_TIMES).forEach(key => {
         const rawTime = window.PRAYER_TIMES[key];
 
-        // ✅ HARUS STRING JAM
-        if (typeof rawTime !== "string") return;
-        if (!rawTime.includes(":")) return;
+        // Harus string jam
+        if (typeof rawTime !== "string" || !rawTime.includes(":")) return;
 
-        // ✅ SUPPORT "HH:MM" DAN "HH:MM:SS"
+        // Support HH:MM & HH:MM:SS
         const parts = rawTime.split(":").map(Number);
         const h = parts[0];
         const m = parts[1] ?? 0;
@@ -45,24 +44,39 @@ function getNextEvent() {
 
         if (isNaN(h) || isNaN(m)) return;
 
-        let eventTime = new Date();
-        eventTime.setHours(h, m, s, 0);
+        /* =========================
+           SHOLAT
+        ========================= */
+        let sholatTime = new Date();
+        sholatTime.setHours(h, m, s, 0);
 
-        // ✅ JIKA SUDAH LEWAT → PINDAHKAN KE BESOK
-        if (eventTime <= now) {
-            eventTime.setDate(eventTime.getDate() + 1);
+        // Sholat boleh digeser ke BESOK
+        if (sholatTime <= now) {
+            sholatTime.setDate(sholatTime.getDate() + 1);
         }
 
         upcoming.push({
             name: key,
             type: "sholat",
-            time: eventTime
+            time: sholatTime
         });
 
-        // ✅ IQOMAH JUGA DIGESER KE BESOK JIKA PERLU
+        /* =========================
+           IQOMAH
+        ========================= */
         let iq = (window.IQOMAH || {})[key] || 0;
         if (iq > 0) {
-            let iqTime = new Date(eventTime.getTime() + iq * 60000);
+
+            // IQOMAH HARUS dihitung dari waktu ASLI hari ini
+            let iqTime = new Date();
+            iqTime.setHours(h, m, s, 0);
+            iqTime = new Date(iqTime.getTime() + iq * 60000);
+
+            // IQOMAH hanya digeser ke BESOK jika benar-benar lewat
+            if (iqTime <= now) {
+                iqTime.setDate(iqTime.getDate() + 1);
+            }
+
             upcoming.push({
                 name: key,
                 type: "iqomah",

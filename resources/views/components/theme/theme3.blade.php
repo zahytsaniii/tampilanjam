@@ -44,8 +44,18 @@ $labels = array_filter($labels, function ($key) use ($enabled) {
         @foreach ($labels as $key => $label)
             <div class="tv3-prayer-card" data-prayer="{{ $key }}">
                 <div class="tv3-prayer-name">{{ $label }}</div>
-                <div class="tv3-prayer-time">{{ $times[$key] ?? '--:--' }}</div>
-
+                <div class="tv3-prayer-time">
+                    @php
+                        $t = $times[$key] ?? null;
+                        if ($t && is_string($t) && str_contains($t, ':')) {
+                            $parts = explode(':', $t);
+                            echo sprintf('%02d:%02d', $parts[0], $parts[1] ?? 0);
+                        } else {
+                            echo '--:--';
+                        }
+                    @endphp
+                </div>
+                
                 {{-- ✅ COUNTDOWN MUNCUL DI SINI SAAT AKTIF --}}
                 <div class="tv3-countdown"></div>
             </div>

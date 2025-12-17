@@ -24,7 +24,9 @@ $labels = array_filter($labels, function ($key) use ($enabled) {
         @foreach ($labels as $key => $label)
             <div class="theme1-time-row" data-prayer="{{ $key }}">
                 <span class="label">{{ $label }}</span>
-                <span class="time">{{ $times[$key] ?? '--:--' }}</span>
+                <span class="time">
+                    {{ isset($times[$key]) ? substr($times[$key], 0, 5) : '--:--' }}
+                </span>
             </div>
         @endforeach
     </div>
@@ -52,13 +54,15 @@ $labels = array_filter($labels, function ($key) use ($enabled) {
         {{-- ================= AYAT AL-QURAN ================= --}}
         @if(isset($quranVerses) && $quranVerses->count())
             <div class="theme1-quran">
-                @foreach($quranVerses as $i => $v)
-                    <div class="quran-slide {{ $i === 0 ? 'active' : '' }}">
-                        <div class="quran-arabic">{{ $v->arabic_text }}</div>
-                        <div class="quran-surah">{{ $v->surah }}</div>
-                        <div class="quran-translation">{{ $v->translation }}</div>
-                    </div>
-                @endforeach
+                <div class="quran-box">
+                    @foreach($quranVerses as $i => $v)
+                        <div class="quran-slide {{ $i === 0 ? 'active' : '' }}">
+                            <div class="quran-arabic">{{ $v->arabic_text }}</div>
+                            <div class="quran-surah">{{ $v->surah }}</div>
+                            <div class="quran-translation">{{ $v->translation }}</div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         @endif
 

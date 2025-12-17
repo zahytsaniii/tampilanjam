@@ -35,7 +35,17 @@
             @foreach($enabled as $p)
             <tr data-prayer="{{ $p }}">
                 <td style="text-transform: capitalize;">{{ $p }}</td>
-                <td>{{ $prayer[$p] ?? '--:--' }}</td>
+                <td>
+                    @php
+                        $t = $prayer[$p] ?? null;
+                        if ($t && is_string($t) && str_contains($t, ':')) {
+                            $parts = explode(':', $t);
+                            echo sprintf('%02d:%02d', $parts[0], $parts[1] ?? 0);
+                        } else {
+                            echo '--:--';
+                        }
+                    @endphp
+                </td>
             </tr>
             @endforeach
         </table>

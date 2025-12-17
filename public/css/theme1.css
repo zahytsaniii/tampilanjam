@@ -106,15 +106,24 @@ body {
 /* ================= AYAT AL-QURAN ================= */
 .theme1-quran {
     position: absolute;
-    top: calc(50% + 130px); /* 👈 DI BAWAH COUNTDOWN */
+    top: calc(50% + 180px);
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    height: 160px;
+    width: 85%;
+    z-index: 5;
+
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 16px;
+    padding: 20px 28px;
+
     text-align: center;
     color: white;
     text-shadow: 2px 2px 10px black;
-    overflow: hidden;
+}
+
+.quran-box {
+    position: relative;
+    min-height: 140px; /* ⬅️ aman untuk 3–4 baris */
 }
 
 .quran-slide {
@@ -129,8 +138,9 @@ body {
 }
 
 .quran-arabic {
+    font-family: 'AmiriQuran', serif;
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 300;
     direction: rtl;
 }
 
@@ -144,4 +154,11 @@ body {
     margin-top: 10px;
     font-size: 18px;
     font-style: italic;
+}
+
+@font-face {
+    font-family: 'AmiriQuran';
+    src: url('/fonts/AmiriQuran-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
